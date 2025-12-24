@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const csvUrl =
-    "https://usr-hub.ncku.edu.tw/var/file/189/1189/img/367245029.csv";
+  const csvUrl = "faculty.csv";
 
   const list = document.getElementById("teacher-list");
   if (!list) {
@@ -47,3 +46,4 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   });
 });
+
