@@ -1,49 +1,34 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const csvUrl = "faculty.csv";
+  fetch("faculty.csv")
+    .then((res) => {
+      console.log("CSV response status:", res.status);
+      return res.text();
+    })
+    .then((text) => {
+      console.log("CSV 原始内容前 300 字：");
+      console.log(text.slice(0, 300));
 
-  const list = document.getElementById("teacher-list");
-  if (!list) {
-    console.error("找不到 #teacher-list");
-    return;
-  }
+      const list = document.getElementById("teacher-list");
+      list.innerHTML = "";
 
-  Papa.parse(csvUrl, {
-    download: true,
-    header: true,
-    skipEmptyLines: true,
-    complete: function (results) {
-      console.log("CSV 第一笔资料：", results.data[0]);
+      const lines = text.split("\n");
 
-      if (!results.data || results.data.length === 0) {
-        list.innerHTML = "<li>CSV 没有资料</li>";
-        return;
-      }
+      // 跳过表头，从第二行开始
+      for (let i = 1; i < lines.length; i++) {
+        const cols = lines[i].split(",");
 
-      const firstRow = results.data[0];
-      const keys = Object.keys(firstRow);
-
-      console.log("CSV 栏位名称：", keys);
-
-      results.data.forEach((row) => {
-        // 先暴力抓第一个「看起来像姓名」的栏位
-        let name = null;
-        for (const key of keys) {
-          if (key.includes("姓名")) {
-            name = row[key];
-            break;
-          }
-        }
-
-        if (!name) return;
+        if (!cols[1]) continue; // 第二栏先当姓名（测试用）
 
         const li = document.createElement("li");
-        li.textContent = name;
+        li.textContent = cols[1].trim();
         list.appendChild(li);
-      });
-    },
-    error: function (err) {
-      console.error("CSV 读取失败：", err);
-    },
-  });
-});
+      }
 
+      if (list.children.length === 0) {
+        list.innerHTML = "<li>⚠ 没有解析到任何资料</li>";
+      }
+    })
+    .catch((err) => {
+      console.error("fetch CSV 失败：", err);
+    });
+});
