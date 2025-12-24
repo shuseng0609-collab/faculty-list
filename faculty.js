@@ -1,11 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
   Papa.parse("faculty.csv", {
     download: true,
-    header: true,       // ⭐ 用表头
+    header: true,
     skipEmptyLines: true,
     complete: function (results) {
       const data = results.data;
-
       const list = document.getElementById("teacher-list");
       list.innerHTML = "";
 
@@ -18,15 +17,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         seen.add(name);
 
-const li = document.createElement("li");
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.textContent = name;
+        a.href = "detail.html?name=" + encodeURIComponent(name);
 
-const a = document.createElement("a");
-a.textContent = name;
-a.href = "detail.html?name=" + encodeURIComponent(name);
-
-li.appendChild(a);
-list.appendChild(li);
-
+        li.appendChild(a);
+        list.appendChild(li);
       });
 
       if (list.children.length === 0) {
@@ -38,5 +35,3 @@ list.appendChild(li);
     }
   });
 });
-
-
