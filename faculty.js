@@ -19,8 +19,14 @@ document.addEventListener("DOMContentLoaded", () => {
         seen.add(name);
 
         const li = document.createElement("li");
-        li.textContent = name;
+
+        const a = document.createElement("a");
+        a.textContent = name;
+        a.href = "detail.html?name=" + encodeURIComponent(name);
+
+        li.appendChild(a);
         list.appendChild(li);
+
       });
 
       if (list.children.length === 0) {
@@ -32,3 +38,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
