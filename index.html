@@ -3,39 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>教師名單</title>
-
-  <!-- CSV 解析器 -->
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-
-  <!-- 等下会放的 JS -->
-  <script src="faculty.js"></script>
-
-  <style>
-    body {
-      font-family: "Microsoft JhengHei", sans-serif;
-      padding: 16px;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-    li {
-      margin: 8px 0;
-    }
-    a {
-      color: #0b5ed7;
-      text-decoration: none;
-      cursor: pointer;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-  </style>
 </head>
 <body>
 
 <h2>教師名單</h2>
 <ul id="teacher-list"></ul>
+
+<!-- ★ 重点在这里：放在 body 最后 -->
+<script src="./faculty.js"></script>
 
 </body>
 </html>
