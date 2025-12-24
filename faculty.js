@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const csvUrl =
-    "https://usr-hub.ncku.edu.tw/var/file/189/1189/img/621812611.csv";
+    "https://usr-hub.ncku.edu.tw/var/file/189/1189/img/367245029.csv";
 
   const list = document.getElementById("teacher-list");
   if (!list) {
@@ -9,14 +9,23 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   Papa.parse(csvUrl, {
-    download: true,
+    download: true,          // ← 关键：强制用 HTTP 读
     header: true,
     skipEmptyLines: true,
+    encoding: "UTF-8",
     complete: function (results) {
-      const data = results.data;
+      if (!results.data || results.data.length === 0) {
+        console.error("CSV 没有资料", results);
+        return;
+      }
 
-      data.forEach((row) => {
-        const name = row["老师姓名"] || row["教師姓名"] || row["姓名"];
+      results.data.forEach((row) => {
+        const name =
+          row["老師姓名"] ||
+          row["教师姓名"] ||
+          row["老師"] ||
+          row["姓名"];
+
         if (!name) return;
 
         const li = document.createElement("li");
